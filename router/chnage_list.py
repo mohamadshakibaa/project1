@@ -1,4 +1,4 @@
-from fastapi import FastAPI , APIRouter , Response
+from fastapi import APIRouter 
 from typing import Literal, Optional
 from pydantic import BaseModel
 
@@ -11,7 +11,6 @@ class Items(BaseModel):
     products : Optional[list[dict]] = None
 
 
-
 items = {
         "labaniat" : {"name" : "labaniat" ,"description": "milk"  , "price" : 10000, "products" : [{"name" : "cheese" , "id" : 1}]},
         "mavad_shoyande" : {"name" : "mavad_shoyande" ,"description": "none" , "price" : 40000, "products" : [{"name" : "vitex" , "id" : 2 }]},
@@ -22,8 +21,8 @@ items = {
 }
 
 
-@router.post('/itmes/{item_id}/public' , response_model= Items)
+@router.post('/itmes' , response_model= Items , tags=["change list"])
           
-async def create_exclude(item_id : Literal["labaniat","mavad_shoyande","mavad_behdashti", "mavaq_qzaei", "tanaqolat" , "drink"]):
+async def create_exclude(item : Items):
     
-    return items[item_id]
+    return item
